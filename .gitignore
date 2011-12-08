@@ -1,0 +1,12 @@
+failed*
+evernote.py
+journal/
+mongo.log
+mongod.lock
+mydb.*
+paster.log
+paster.pid
+scanned_docs/.emacs.desktop
+supervisord.conf
+testdb/
+.coverage

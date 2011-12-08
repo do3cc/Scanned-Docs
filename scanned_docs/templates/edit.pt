@@ -1,0 +1,73 @@
+<body metal:use-macro="base">
+  <div id="container" class="edit_view" metal:fill-slot="content">
+    <div class="row">
+      <div class="page-header">
+        <h1>Edit contents</h1>
+      </div>
+      <div class="span4">
+        <div class="media-grid">
+          <a href="#">
+            <img src="#"
+                 rel="popover"
+                 class="thumb"
+                 data-controls-modal="modal-image"
+                 tal:attributes="src request.route_url('thumb', id=docid)"></img>
+          </a>
+          <div id="modal-image" class="modal-image modal hide fade">
+            <img src="#"
+                 rel="popover"
+                 class="image"
+                 tal:attributes="src request.route_url('image', id=docid)"></img>
+          </div>
+        </div>
+      </div>
+      <div class="span12">
+        <form action="edit" method="post">
+          <div class="clearfix">
+            <div class="input">
+              <input type="text" name="title" value="${title}" id="title" />
+            </div>
+          </div>
+          <div class="clearfix">
+            <div class="input">
+              <input type="datetime" name="created" value="${created}" id="created" />
+            </div>
+          </div>
+          <div class="clearfix">
+            <div class="input">
+              <textarea name="description" placeholder="description"></textarea>
+            </div>
+          </div>
+          <div class="clearfix">
+            <ul class="unstyled keywords">
+              <li
+                  tal:repeat="keyword distinct_keywords">
+                <a href="#" class="btn"
+                   tal:content="keyword" />
+              </li>
+            </ul>
+            <div class="input">
+              <textarea name="keywords" placeholder="keywords"
+                        tal:content="keywords"></textarea>
+            </div>
+          </div>
+          <div class="actions">
+            <input type="submit" value="Save changes" class="btn primary">&nbsp;<button class="btn" type="reset">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="searchterms">
+        <ul>
+          <li 
+              tal:repeat="searchterm searchterms" 
+              tal:content="searchterm"></li>
+        </ul>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function(){
+      scanned_docs.edit_init();
+      });
+    </script>
+  </div>
+</body>
