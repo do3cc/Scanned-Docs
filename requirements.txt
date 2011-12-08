@@ -46,7 +46,6 @@ python-magic==0.4.0
 pytz==2011h
 repoze.lru==0.3
 requests==0.8.2
--e git+git@github.com:do3cc/Scanned-Docs.git@8ffc9a84b863913e3e2d8516242b5dcd983d5171#egg=scanned_docs-dev
 simplejson==2.1.6
 supervisor==3.0a10
 translationstring==0.3
