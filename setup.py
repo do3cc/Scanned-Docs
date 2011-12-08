@@ -19,7 +19,7 @@ setup(name='scanned_docs',
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-      author="Patrick Gerken"
+      author="Patrick Gerken",
       author_email='docc@patrick-gerken.de',
       url='http://do3.cc',
       keywords='web pyramid mongodb',
