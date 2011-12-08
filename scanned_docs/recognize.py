@@ -1,4 +1,4 @@
-from Image import open as imgopen
+from PIL.Image import open as imgopen
 from guess_language import guessLanguage
 from os import remove
 from subprocess import call
