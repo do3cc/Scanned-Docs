@@ -1,4 +1,4 @@
-from Image import open as imgopen
+from PIL.Image import open as imgopen
 from StringIO import StringIO
 from magic import from_buffer as magic_buffer
 from os import rmdir, listdir, path
