@@ -1,0 +1,26 @@
+[unix_http_server]
+file=${buildout:var-directory}/supervisor.sock   ; (the path to the socket file)
+
+[supervisord]
+logfile=${buildout:var-directory}/supervisord.log ; (main log file;default $CWD/supervisord.log)
+logfile_maxbytes=50MB       ; (max main logfile bytes b4 rotation;default 50MB)
+logfile_backups=10          ; (num of main logfile rotation backups;default 10)
+loglevel=info               ; (log level;default info; others: debug,warn,trace)
+pidfile=${buildout:var-directory}/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
+nodaemon=false              ; (start in foreground if true;default false)
+minfds=1024                 ; (min. avail startup file descriptors;default 1024)
+minprocs=200                ; (min. avail process descriptors;default 200)
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix://${buildout:var-directory}/supervisor.sock ; use a unix:// URL  for a unix socket
+
+[program:mongo]
+command=/usr/bin/mongod --dbpath ${mongo_config:dbpath} --port ${mongo_config:port}
+directory= ${buildout:directory}
+
+[program:scanner]
+directory= ${buildout:directory}
+command= ${buildout:directory}/bin/paster serve ${buildout:parts-directory}/pastercfg/${scanner_config:environment}

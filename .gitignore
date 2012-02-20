@@ -10,3 +10,4 @@ scanned_docs/.emacs.desktop
 supervisord.conf
 testdb/
 .coverage
+.vagrant
