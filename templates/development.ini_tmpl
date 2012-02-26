@@ -6,8 +6,11 @@ debug_notfound = false
 debug_routematch = false
 debug_templates = true
 default_locale_name = en
-mongodb.url = mongodb://localhost:9999
-mongodb.db_name = mydb
+mongodb.url = mongodb://${mongo_config:host}:${mongo_config:port}
+mongodb.db_name = ${mongo_config:dbname}
+plugin.registry.host = ${scanner_config:plugin_registry_host}
+plugin.registry.port = ${scanner_config:plugin_registry_port}
+plugin.events.port = ${scanner_config:plugin_events_port}
 
 accepted_languages=de,en,it
 
@@ -18,8 +21,8 @@ pipeline =
 
 [server:main]
 use = egg:Paste#http
-host = 0.0.0.0
-port = 6543
+host = ${scanner_config:host}
+port = ${scanner_config:port}
 
 # Begin logging configuration
 

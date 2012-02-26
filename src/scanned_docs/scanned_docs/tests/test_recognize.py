@@ -1,6 +1,6 @@
 from nose.tools import raises
 from pkg_resources import resource_stream
-from Image import Image
+from PIL.Image import Image
 
 
 def test_extract_data():

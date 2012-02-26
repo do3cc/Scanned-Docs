@@ -1,12 +1,12 @@
 [unix_http_server]
-file=${buildout:var-directory}/supervisor.sock   ; (the path to the socket file)
+file=${buildout:directory}/var/supervisor.sock   ; (the path to the socket file)
 
 [supervisord]
-logfile=${buildout:var-directory}/supervisord.log ; (main log file;default $CWD/supervisord.log)
+logfile=${buildout:directory}/var/supervisord.log ; (main log file;default $CWD/supervisord.log)
 logfile_maxbytes=50MB       ; (max main logfile bytes b4 rotation;default 50MB)
 logfile_backups=10          ; (num of main logfile rotation backups;default 10)
 loglevel=info               ; (log level;default info; others: debug,warn,trace)
-pidfile=${buildout:var-directory}/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
+pidfile=${buildout:directory}/var/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
 nodaemon=false              ; (start in foreground if true;default false)
 minfds=1024                 ; (min. avail startup file descriptors;default 1024)
 minprocs=200                ; (min. avail process descriptors;default 200)
@@ -15,12 +15,21 @@ minprocs=200                ; (min. avail process descriptors;default 200)
 supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
 [supervisorctl]
-serverurl=unix://${buildout:var-directory}/supervisor.sock ; use a unix:// URL  for a unix socket
+serverurl=unix://${buildout:directory}/var/supervisor.sock ; use a unix:// URL  for a unix socket
 
 [program:mongo]
 command=/usr/bin/mongod --dbpath ${mongo_config:dbpath} --port ${mongo_config:port}
 directory= ${buildout:directory}
 
+[program:testmongo]
+command=/usr/bin/mongod --dbpath ${mongo_test_config:dbpath} --port ${mongo_test_config:port}
+directory= ${buildout:directory}
+autostart = False
+
 [program:scanner]
 directory= ${buildout:directory}
-command= ${buildout:directory}/bin/paster serve ${buildout:parts-directory}/pastercfg/${scanner_config:environment}
+command= ${buildout:directory}/bin/paster serve ${buildout:parts-directory}/pastecfg/${scanner_config:environment}
+
+[program:tika]
+directory= ${buildout:directory}
+command= java -jar ${buildout:directory}/tika-app-1.0.jar --server ${tika:port}

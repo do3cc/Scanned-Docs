@@ -11,3 +11,8 @@ supervisord.conf
 testdb/
 .coverage
 .vagrant
+bin/
+parts/
+src/text_sentence/
+tika-app-1.0.jar
+var/
