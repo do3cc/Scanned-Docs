@@ -1,30 +1,35 @@
 <body metal:use-macro="base">
   <div id="container" class="edit_view" metal:fill-slot="content">
-    <div class="row">
-      <div class="page-header">
-        <h1>Edit contents</h1>
-      </div>
-      <div class="span4">
-        <div class="media-grid">
-          <a href="#">
-            <img src="#"
-                 rel="popover"
-                 class="thumb"
-                 data-controls-modal="modal-image"
-                 tal:attributes="src request.route_url('thumb', id=docid)"></img>
-          </a>
-          <div id="modal-image" class="modal-image modal hide fade">
-            <img src="#"
-                 rel="popover"
-                 class="image"
-                 tal:attributes="src request.route_url('image', id=docid)"></img>
-          </div>
+    <form action="edit" method="post">
+      <div class="row">
+        <div class="page-header">
+          <h1>Edit contents</h1>
         </div>
-      </div>
-      <div class="span12">
-        <form action="edit" method="post">
+        <div class="span4">
+          <ul class="unstyled">
+            <li tal:repeat="html_view html_views">
+              <div tal:content="structure html_view" />
+            </li>
+          </ul>
+  <!--        <div class="media-grid">
+            <a href="#">
+              <img src="#"
+                  rel="popover"
+                  class="thumb"
+                  data-controls-modal="modal-image"
+                  tal:attributes="src request.route_url(    'thumb', id=docid)"></img>
+            </a>
+            <div id="modal-image" class="modal-image modal hide fade">
+              <img src="#"
+                  rel="popover"
+                  class="image"
+                  tal:attributes="src request.route_url('image', id=docid)"></img>
+            </div>
+          </div>-->
+        </div>
+        <div class="span12">
           <div class="clearfix">
-            <div class="input">
+             <div class="input">
               <input type="text" name="title" value="${title}" id="title" />
             </div>
           </div>
@@ -43,7 +48,7 @@
               <li
                   tal:repeat="keyword distinct_keywords">
                 <a href="#" class="btn"
-                   tal:content="keyword" />
+                  tal:content="keyword" />
               </li>
             </ul>
             <div class="input">
@@ -51,17 +56,27 @@
                         tal:content="keywords"></textarea>
             </div>
           </div>
-          <div class="actions">
-            <input type="submit" value="Save changes" class="btn primary">&nbsp;<button class="btn" type="reset">Cancel</button>
-          </div>
-        </form>
+        </div>
       </div>
-      <div class="searchterms">
-        <ul>
-          <li 
-              tal:repeat="searchterm searchterms" 
-              tal:content="searchterm"></li>
-        </ul>
+      <div class="actions row">
+        <p>
+          <input type="submit" value="Save changes" class="btn primary">&nbsp;<button class="btn" type="reset">Cancel</button>
+        </p>
+        <p>
+          <a class="btn" tal:attributes="src request.route_url('image', id=docid)">Download</a>
+        </p>
+      </div>
+    </form>
+    <div class="row">
+      <div class="span-16 searchterms">
+        <h6 id="searchterms_header">Extracted search terms</h6>
+        <div id="searchterms">
+          <ul>
+            <li 
+                tal:repeat="searchterm searchterms" 
+                tal:content="searchterm"></li>
+          </ul>
+        </div>
       </div>
     </div>
     <script type="text/javascript">

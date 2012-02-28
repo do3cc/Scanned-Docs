@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+${buildout:directory}/bin/broker --in tcp://${scanner_config:plugin_registry_host}:${scanner_config:plugin_events_broker_in_port} --out tcp://${scanner_config:plugin_registry_host}:${scanner_config:plugin_events_broker_out_port}

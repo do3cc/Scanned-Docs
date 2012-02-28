@@ -10,9 +10,10 @@ mongodb.url = mongodb://${mongo_config:host}:${mongo_config:port}
 mongodb.db_name = ${mongo_config:dbname}
 plugin.registry.host = ${scanner_config:plugin_registry_host}
 plugin.registry.port = ${scanner_config:plugin_registry_port}
-plugin.events.port = ${scanner_config:plugin_events_port}
+plugin.events.broker.in.port = ${scanner_config:plugin_events_broker_in_port}
+plugin.events.broker.out.port = ${scanner_config:plugin_events_broker_out_port}
 
-accepted_languages=de,en,it
+accepted_languages=${scanner_config:accepted_languages}
 
 [pipeline:main]
 pipeline =

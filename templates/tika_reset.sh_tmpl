@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+${buildout:directory}/bin/tika --scanner_subscribe http://${scanner_config:host}:${scanner_config:port}/plugins --tikapath ${buildout:directory}/tika-app-1.0.jar --accepted_languages ${scanner_config:accepted_languages} --fill_queue tcp://${scanner_config:plugin_registry_host}:${scanner_config:plugin_events_broker_in_port}

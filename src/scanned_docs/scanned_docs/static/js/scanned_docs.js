@@ -30,6 +30,12 @@ scanned_docs.edit_init = function(){
     updateButtons();
     keyword_field.change(updateButtons);
     keyword_buttons.click(toggleKeyword);
+
+    var searchterms = $("#searchterms");
+    searchterms.hide();
+    $("#searchterms_header").click(function(){
+        searchterms.toggle();
+    })
 };
 
 scanned_docs.base_init = function(){
