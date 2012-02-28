@@ -33,7 +33,7 @@ def main():
     else:
         job = gevent.spawn(subscribe, conns["subscribe_conn"],
                            handle_subscription, db, args)
-    job.join()
+        job.join()
 
 
 def register(subscribe_url):
@@ -68,7 +68,7 @@ def handle_initial(db, args):
     context = zmq.Context()
     socket = context.socket(zmq.PUSH)
     socket.connect(args.fill_queue)
-    for doc in db.docs.find({"tika.version": {"$exists": False}}):
+    for doc in db.docs.find({"tika_version": {"$exists": False}}):
         print doc["_id"]
         socket.send("new " + str(doc["_id"]))
 

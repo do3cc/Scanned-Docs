@@ -48,12 +48,14 @@
                       </td>
                       <td tal:content="doc.created" />
                       <td>
-                        <div class="media-grid">
+<!--                        <div class="media-grid">
                           <a href="#" tal:attributes="href python:'/%s/image' % doc._id"><img src="#" tal:attributes="src python:'/%s/thumb' % doc._id" alt="" class="thumbnail"></img></a>
-                        </div>
+                        </div>-->
                         </td>
-                      <td tal:condition="python: 'search_terms' in doc"
-                          tal:content="len([x for x in doc['search_terms'] if len(x) > 2])" />
+                      <td>
+                        <span tal:condition="python: 'search_terms' in doc"
+                          tal:replace="len([x for x in doc['search_terms'] if len(x) > 2])" />
+                      </td>
                       <td><a class="edit" tal:attributes="href python:'/%s/edit' % doc._id">edit</a></td>
                       <td><a class="delete" tal:attributes="href python:'/%s/delete' % doc._id">delete</a></td>
                     </tr>

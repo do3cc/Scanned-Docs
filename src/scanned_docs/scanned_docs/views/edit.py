@@ -21,7 +21,7 @@ def edit(request):
     retval["keywords"] = "\n".join(doc.get("keywords", []))
     retval["distinct_keywords"] = request.db.docs.distinct("keywords")
     retval["docid"] = doc["_id"]
-    retval["html_views"] = [doc[x] for x in doc["full_htmls"]]
+    retval["html_views"] = [doc[x] for x in doc.get("full_htmls", [])]
 
     return retval
 
