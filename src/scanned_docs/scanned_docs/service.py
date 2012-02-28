@@ -55,11 +55,16 @@ def add(request):
                          raw_data=grid.put(datastream)))
 
     settings = request.registry.settings
-    context = zmq.Context()
-    socket = context.socket(zmq.PUSH)
-    socket.connect("tcp://%(plugin.registry.host)s:%(plugin.events.broker.in.p"
-                   "ort)s" % settings)
-    socket.send("new " + str(id))
+    try:
+        context = zmq.Context()
+        socket = context.socket(zmq.PUSH)
+        socket.connect("tcp://%(plugin.registry.host)s:%(plugin.events.broker.in.p"
+                    "ort)s" % settings)
+        socket.setsockopt(zmq.LINGER, 100)
+        socket.send("new " + str(id), zmq.NOBLOCK)
+        socket.close()
+    except Exception, e:
+        print e
 
     return dict(id=str(id))
 

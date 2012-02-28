@@ -29,7 +29,10 @@ class test_tika(object):
 
     def test_tika(self):
         from scanned_docs.plugins import tika
-        tika.handle_update(self.db, self.tikapath, str(self.new_doc))
+        class Args(object):
+            tikapath = self.tikapath
+            accepted_languages = 'de,en'
+        tika.handle_update(self.db, Args, str(self.new_doc))
         should_be = {
             u"fulltext_fields": [u"tika_text"],
             u"tika_content_type": u"application/vnd.oasis.opendocument.text",
