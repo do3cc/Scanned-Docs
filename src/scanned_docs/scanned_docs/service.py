@@ -1,16 +1,19 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from cornice import Service
 from datetime import datetime
 from gridfs import GridFS
 from pymongo.objectid import ObjectId
+from pyramid.url import route_url
 from webob import Response
 import json
 import zmq
 
+from scanned_docs.index import index
 from scanned_docs.utils import convertStringToDateTime
 
-doc_service = Service(name="doc", path="/doc*docid")
+doc_service = Service(name='doc', path='/doc*docid')
 
 
 def exists(*args):
@@ -18,7 +21,7 @@ def exists(*args):
     def validator(request):
         for arg in args:
             if arg not in request.params:
-                request.errors.add("parameters", arg, "Is missing")
+                request.errors.add('parameters', arg, 'Is missing')
             else:
                 request.validated[arg] = request.params[arg]
 
@@ -26,27 +29,27 @@ def exists(*args):
 
 
 def date_converter(request):
-    created_string = request.params.get("created", "")
+    created_string = request.params.get('created', '')
     if created_string:
         try:
             created = convertStringToDateTime(created_string)
         except:
-            request.errors.add("parameters", "crated",
-                               "Cannot parse date format")
+            request.errors.add('parameters', 'crated',
+                               'Cannot parse date format')
             return
     else:
         created = datetime.utcnow()
-    request.validated["created"] = created
+    request.validated['created'] = created
 
 
-@doc_service.put(validator=(exists("title", "file"), date_converter))
+@doc_service.put(validator=(exists('title', 'file'), date_converter))
 def add(request):
-    title = request.params["title"]
-    created = request.params.get("created", datetime.utcnow()) \
+    title = request.params['title']
+    created = request.params.get('created', datetime.utcnow()) \
         or datetime.utcnow()
-    description = request.params.get("description", "")
+    description = request.params.get('description', '')
 
-    datastream = request.params["file"].file
+    datastream = request.params['file'].file
 
     doc_list = request.db.docs
     grid = GridFS(request.db)
@@ -58,10 +61,10 @@ def add(request):
     try:
         context = zmq.Context()
         socket = context.socket(zmq.PUSH)
-        socket.connect("tcp://%(plugin.registry.host)s:%(plugin.events.broker.in.p"
-                    "ort)s" % settings)
+        socket.connect('tcp://%(plugin.registry.host)s:%(plugin.events.broker.in.port)s'
+                        % settings)
         socket.setsockopt(zmq.LINGER, 100)
-        socket.send("new " + str(id), zmq.NOBLOCK)
+        socket.send('new ' + str(id), zmq.NOBLOCK)
         socket.close()
     except Exception, e:
         print e
@@ -71,16 +74,48 @@ def add(request):
 
 @doc_service.get()
 def get(request):
-    id_ = request.matchdict["docid"][0]
-    doc = request.db.docs.find_one({"_id": ObjectId(id_)})
+    if request.matchdict['docid']:
+        return get_one(request)
+    else:
+        return get_many(request)
+
+
+def get_one(request):
+    id_ = request.matchdict['docid'][0]
+    doc = request.db.docs.find_one({'_id': ObjectId(id_)})
     grid = GridFS(request.db)
 
-    response = Response(grid.get(doc["raw_data"]).read())
-    if "content_type" in doc:
-        response.content_type = doc["content_type"]
+    response = Response(grid.get(doc['raw_data']).read())
+    if 'content_type' in doc:
+        response.content_type = doc['content_type']
     return response
 
-plugins_service = Service(name="plugins", path="/plugins")
+
+def get_many(request):
+    query_args = {}
+    if 'filter' in request.params:
+        keys = list(index(request.params['filter']))
+        query_args.update({'search_terms': {'$in': keys}})
+    if 'keyword' in request.params:
+        query_args.update({'keywords': {'$in': [request.params['keyword'
+                          ]]}})
+    if 'page' in request.params:
+        page = int(request.params['page'])
+    else:
+        page = 0
+    docs = request.db.docs.find(spec=query_args)
+    totals = docs.count()
+    docs = docs.skip(page * 10).limit(10)
+
+    url_maker = lambda x: route_url(doc_service.route_name, request,
+                                    docid=doc['_id'])
+
+    return dict(total=totals, results=[{'id': str(doc['_id']),
+                'resource_url': url_maker(doc), 'title': doc['title']}
+                for doc in docs])
+
+
+plugins_service = Service(name='plugins', path='/plugins')
 
 
 @plugins_service.put()
@@ -88,8 +123,8 @@ def register(request):
     settings = request.registry.settings
     data = json.loads(request.body)
     print data
-    assert data["version"] == 1
-    return dict(couch_conn=settings["mongodb.url"],
-                couch_db_name=settings["mongodb.db_name"],
-                subscribe_conn="tcp://%(plugin.registry.host)s:%(plugin.events"
-                ".broker.out.port)s" % settings)
+    assert data['version'] == 1
+    return dict(couch_conn=settings['mongodb.url'],
+                couch_db_name=settings['mongodb.db_name'],
+                subscribe_conn='tcp://%(plugin.registry.host)s:%(plugin.events.broker.out.port)s'
+                 % settings)
