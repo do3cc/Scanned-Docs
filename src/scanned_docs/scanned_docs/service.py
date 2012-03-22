@@ -53,9 +53,14 @@ def add(request):
 
     doc_list = request.db.docs
     grid = GridFS(request.db)
-    id = doc_list.insert(dict(title=title, description=description,
-                         created=created, version=5,
-                         raw_data=grid.put(datastream)))
+    params = {}
+    for key in request.params.keys():
+        if key not in ['title', 'created', 'description', 'file']:
+            params[key] = request.params[key]
+    params.extend(dict(title=title, description=description,
+                  created=created, version=5,
+                  raw_data=grid.put(datastream)))
+    id = doc_list.insert(params)
 
     settings = request.registry.settings
     try:
