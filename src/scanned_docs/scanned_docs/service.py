@@ -45,8 +45,8 @@ def date_converter(request):
 @doc_service.put(validator=(exists('title', 'file'), date_converter))
 def add(request):
     title = request.params['title']
-    created = request.params.get('created', datetime.utcnow()) \
-        or datetime.utcnow()
+    created = request.validated['created'] or datetime.utcnow()
+
     description = request.params.get('description', '')
 
     datastream = request.params['file'].file
@@ -57,9 +57,12 @@ def add(request):
     for key in request.params.keys():
         if key not in ['title', 'created', 'description', 'file']:
             params[key] = request.params[key]
-    params.extend(dict(title=title, description=description,
+    params.update(dict(title=title, description=description,
                   created=created, version=5,
-                  raw_data=grid.put(datastream)))
+                  raw_data=grid.put(datastream),
+                  fulltext_fields=['description', 'title']))
+    indexed_text = list(index(" ".join([title, description])))
+    params['search_terms'] = indexed_text
     id = doc_list.insert(params)
 
     settings = request.registry.settings
@@ -98,12 +101,14 @@ def get_one(request):
 
 def get_many(request):
     query_args = {}
-    if 'filter' in request.params:
+    if 'filter' in request.params and request.params['filter'].strip():
         keys = list(index(request.params['filter']))
         query_args.update({'search_terms': {'$in': keys}})
-    if 'keyword' in request.params:
+    if 'keyword' in request.params and request.params['keyword'].strip():
         query_args.update({'keywords': {'$in': [request.params['keyword'
                           ]]}})
+    if 'id' in request.params and request.params['id'].strip():
+        query_args = {'_id': ObjectId(request.params['id'])}
     if 'page' in request.params:
         page = int(request.params['page'])
     else:
@@ -115,9 +120,34 @@ def get_many(request):
     url_maker = lambda x: route_url(doc_service.route_name, request,
                                     docid=doc['_id'])
 
-    return dict(total=totals, results=[{'id': str(doc['_id']),
-                'resource_url': url_maker(doc), 'title': doc['title']}
-                for doc in docs])
+    def make_dict(result):
+        retval = {}
+        ignores = ['raw_data', '_id', 'fulltext_fields', 'created', 'search_terms', 'full_htmls']
+        if 'full_htmls' in result:
+            ignores += result['full_htmls']
+        if 'fulltext_fields' in result:
+            ignores += result['fulltext_fields']
+        prefix_ignores = ['tika']
+        for key in result.keys():
+            ignore = False
+            if key in ignores:
+                continue
+            for prefix in prefix_ignores:
+                if key.startswith(prefix):
+                    ignore = True
+                    break
+            if ignore:
+                continue
+            retval[key] = result[key]
+        retval['resource_url'] = url_maker(result)
+        retval['id'] = str(result['_id'])
+        retval['created'] = result['created'].isoformat()
+        retval['title'] = result['title']
+        retval['description'] = result['description']
+        return retval
+
+
+    return dict(total=totals, results=[make_dict(doc) for doc in docs])
 
 
 plugins_service = Service(name='plugins', path='/plugins')

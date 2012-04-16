@@ -16,3 +16,5 @@ parts/
 src/text_sentence/
 tika-app-1.0.jar
 var/
+*.pyc
+.*.cfg

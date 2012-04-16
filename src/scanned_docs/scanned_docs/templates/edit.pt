@@ -63,7 +63,7 @@
           <input type="submit" value="Save changes" class="btn primary">&nbsp;<button class="btn" type="reset">Cancel</button>
         </p>
         <p>
-          <a class="btn" tal:attributes="src request.route_url('image', id=docid)">Download</a>
+          <a class="btn" tal:attributes="href request.route_url('/doc*docid', docid=docid)">Download</a>
         </p>
       </div>
     </form>
