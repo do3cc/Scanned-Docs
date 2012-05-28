@@ -15,6 +15,7 @@ class test_tika(object):
     def setUp(self):
         self.db = pymongo.Connection(config.get('test', 'mongodburl'
                 ))['test']
+        self.db.authenticate('test', 'test')
         grid = gridfs.GridFS(self.db)
         datastream = resource_stream(__name__, 'test.odt')
         self.new_doc = self.db.docs.insert(dict(title='test',
@@ -22,10 +23,8 @@ class test_tika(object):
                 raw_data=grid.put(datastream)))
         self.tikapath = path.sep.split(resource_filename(__name__, ''))
 
-        # XXX Get rid of explicit tika version mentions
-
         self.tikapath = path.sep.join(self.tikapath[:-3]
-                + ['tika-app-1.0.jar'])
+                + ['tika-app.jar'])
 
         # XXX must find a way to avoid this
 

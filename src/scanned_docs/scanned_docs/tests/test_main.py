@@ -9,7 +9,9 @@ class test_views(object):
         from scanned_docs import main
         from webtest import TestApp
         app = main({}, **{'mongodb.url': config.get('test', 'mongodburl'
-                   ), 'mongodb.db_name': 'test'})
+                   ), 'mongodb.db_name': 'test',
+               'mongodb.user': 'test',
+                'mongodb.passwd': 'test'})
         self.testapp = TestApp(app)
 
     def test_home(self):

@@ -60,6 +60,8 @@ def main(global_config, **settings):
     conn = pymongo.Connection(db_uri)
     config.registry.settings["mongodb_conn"] = conn
     db = conn[config.registry.settings["mongodb.db_name"]]
+    db.authenticate(config.registry.settings['mongodb.user'], 
+      config.registry.settings['mongodb.passwd'])
     db.docs.ensure_index("created")
     config.add_subscriber(add_mongo_db, NewRequest)
 

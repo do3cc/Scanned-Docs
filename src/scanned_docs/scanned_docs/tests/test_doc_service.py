@@ -14,6 +14,8 @@ class test_service(object):
         app = main({}, **{
             'mongodb.url': config.get('test', 'mongodburl'),
             'mongodb.db_name': 'test',
+            'mongodb.user': 'test',
+            'mongodb.passwd': 'test',
             'accepted_languages': 'de,en',
             'plugin.registry.host': '127.0.0.1',
             'plugin.events.broker.in.port': '7001',
@@ -21,6 +23,10 @@ class test_service(object):
         self.testapp = TestApp(app)
         self.db = pymongo.Connection(config.get('test', 'mongodburl'
                 ))['test']
+        self.db.authenticate('test', 'test')
+
+    def tearDown(self):
+        self.db.docs.remove({})
 
     def test_empty_add(self):
         self.testapp.put('/doc', status=400)
