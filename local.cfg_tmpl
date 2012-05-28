@@ -1,0 +1,3 @@
+[mongo_config]
+#user = mongo
+#passwd = mongo
