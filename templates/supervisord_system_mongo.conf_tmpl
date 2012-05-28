@@ -23,7 +23,7 @@ command= ${buildout:directory}/bin/paster serve ${buildout:parts-directory}/past
 
 [program:tika]
 directory= ${buildout:directory}
-command= java -jar ${buildout:directory}/tika-app-1.0.jar --server ${tika:port}
+command= java -jar ${buildout:directory}/tika-app.jar --server ${tika:port}
 
 [program:broker]
 directory= ${buildout:directory}
