@@ -18,3 +18,7 @@ tika-app-1.0.jar
 var/
 *.pyc
 .*.cfg
+include/
+lib/
+local.cfg
+man/
