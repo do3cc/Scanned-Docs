@@ -10,6 +10,10 @@ from scanned_docs.utils import convertStringToDateTime
 from scanned_docs.db import DocDB
 import os
 
+@task
+def parser_task():
+    return 1
+
 
 @task
 def parser_task(
