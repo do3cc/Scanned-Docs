@@ -17,7 +17,8 @@ requires = [
     "lxml",
     "PasteScript",
     "Pillow",
-    "pymongo",
+    "pymongo==2.0.1",
+    "celery",
     "pyramid<1.3a0",
     "PyStemmer",
     "python-magic",
@@ -55,6 +56,8 @@ setup(
       [console_scripts]
       tika = scanned_docs.plugins.tika:main
       broker = scanned_docs.plugins.broker:main
+      [scanned_docs.parsers]
+      tika = scanned_docs.plugins.tika:parser_task
       """,
     paster_plugins=["pyramid"],
     )

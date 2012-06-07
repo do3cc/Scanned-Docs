@@ -1,151 +1,95 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 from lxml import etree
-from pymongo.objectid import ObjectId
 from tempfile import NamedTemporaryFile
 from webhelpers import text as texthelpers
-import argparse
-import gevent
-import gridfs
-import itertools
-import json
 import pymongo
-import requests
 import subprocess
-import zmq
-
-from scanned_docs.index import index
+from celery.task import task
 from scanned_docs.utils import convertStringToDateTime
+from scanned_docs.db import DocDB
+import os
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--scanner_subscribe")
-    parser.add_argument("--tikapath")
-    parser.add_argument("--accepted_languages")
-    parser.add_argument("--fill_queue")
-    args = parser.parse_args()
-    conns = register(args.scanner_subscribe)
-    db = open_db_connection(conns["couch_conn"], conns["couch_db_name"])
-    print "Registered"
-    if args.fill_queue:
-        handle_initial(db, args)
-    else:
-        job = gevent.spawn(subscribe, conns["subscribe_conn"],
-                           handle_subscription, db, args)
-        job.join()
+@task
+def parser_task(
+    docids=None,
+    initial=False,
+    docdb=None,
+    tikapath=None,
+    accepted_languages=None,
+    ):
+
+    tikapath = tikapath or os.environ.get('tikapath')
+    accepted_languages = accepted_languages \
+        or os.environ.get('accepted_languages')
+    docdb = docdb or DocDB(open_db_connection(), accepted_languages)
+    if initial:
+        handle_initial(docdb, tikapath, accepted_languages)
+        return
+    for docid in docids or []:
+        handle_update(docdb, tikapath, accepted_languages, docid)
+    return
 
 
-def register(subscribe_url):
-    return json.loads(requests.put(subscribe_url, json.dumps(dict(name="Tika",
-                      description="Tika parser", version=1))).content)
-
-
-def open_db_connection(db_conn, db_name):
+def open_db_connection(db_conn=None, db_name=None):
+    db_conn = db_conn or os.environ.get('mongodb_conn')
+    db_name = db_name or os.environ.get('mongodb_db')
     conn = pymongo.Connection(db_conn)
     return conn[db_name]
 
 
-def subscribe(
-    subscription_url,
-    handler,
+def handle_initial(db, tikapath, accepted_languages):
+    for doc in db.find({'tika_version': {'$exists': False}}):
+        handle_update(db, tikapath, accepted_languages, doc=doc)
+
+
+def handle_update(
     db,
-    args,
+    tikapath,
+    accepted_languages,
+    id=None,
+    doc=None,
     ):
 
-    context = zmq.Context()
-    socket = context.socket(zmq.PULL)
-    socket.connect(subscription_url)
-    # socket.setsockopt(zmq.SUBSCRIBE, "new")
-    while True:
-        data = socket.recv()
-        key = " ".join(data.split(" ")[1:])
-        print "subscription", key
-        handle_update(db, args, key)
-
-
-def handle_initial(db, args):
-    context = zmq.Context()
-    socket = context.socket(zmq.PUSH)
-    socket.connect(args.fill_queue)
-    for doc in db.docs.find({"tika_version": {"$exists": False}}):
-        print doc["_id"]
-        socket.send("new " + str(doc["_id"]))
-
-
-def handle_subscription():
-    pass
-
-
-def handle_update(db, args, id):
-    id = ObjectId(id)
-    grid = gridfs.GridFS(db)
-    doc = db.docs.find_one(dict(_id=id))
-    data = grid.get(doc["raw_data"]).read()
+    if not doc:
+        doc = db.find_one(id)
+    data = doc.raw_data
     with NamedTemporaryFile() as tmpfile:
         tmpfile.write(data)
         tmpfile.seek(0)
-        cmd = subprocess.Popen(["/usr/bin/java", "-jar", args.tikapath,
+        cmd = subprocess.Popen(['/usr/bin/java', '-jar', tikapath,
                                tmpfile.name], stdout=subprocess.PIPE)
         analysis = cmd.communicate()[0]
         tree = etree.fromstring(analysis)
-        namespaces = dict(html="http://www.w3.org/1999/xhtml")
-
-        content_type = \
-            tree.xpath("//html:meta[@name=\"Content-Type\"]/@content",
-                       namespaces=namespaces)
-        date = tree.xpath("//html:meta[@name=\"Creation-Date\"]/@content",
-                          namespaces=namespaces)
+        xp = lambda term: tree.xpath(term, namespaces=namespaces)
+        namespaces = dict(html='http://www.w3.org/1999/xhtml')
+        content_type = xp('//html:meta[@name="Content-Type"]/@content')
+        date = xp('//html:meta[@name="Creation-Date"]/@content')
         if date:
             date = convertStringToDateTime(date[0])
-        content = tree.xpath("//html:body/*", namespaces=namespaces)
+        content = xp('//html:body/*')
         if content:
-            content = "".join([etree.tostring(x) for x in content])
-        text = " ".join(tree.xpath("//*/text()", namespaces=namespaces))
-        text = texthelpers.replace_whitespace(text.replace("\n", " ")).strip()
-        description = texthelpers.truncate(text, 100, "", whole_word=True)
-
-        def update_with_prefix(key, value):
-            db.docs.update({"_id": id}, {"$set": {"tika_" + key: value}})
-
-        def update_if_not_set(key, value):
-            db.docs.update({"_id": id, key: {"$exists": False}},
-                           {"$set": {key: value}})
-            update_with_prefix(key, value)
-
-        def push(key, value):
-            db.docs.update({"_id": id}, {"$push": {key: value}})
+            content = ''.join([etree.tostring(x) for x in content])
+        text = ' '.join(xp('//*/text()'))
+        text = texthelpers.replace_whitespace(text.replace('\n', ' '
+                )).strip()
+        description = texthelpers.truncate(text, 100, '',
+                whole_word=True)
 
         if content_type:
-            update_if_not_set("content_type", content_type[0])
+            doc.update_plugin_and_canonical('content_type',
+                    content_type[0], 'tika')
         if date:
-            update_if_not_set("created", date)
+            doc.update_plugin_and_canonical('created', date, 'tika')
         if content:
-            update_with_prefix("full_html", content)
-            push("full_htmls", "tika_full_html")
+            doc.update_plugin('full_html', content, 'tika')
+            doc.register_html_representation('full_html', 'tika')
         if text:
-            update_with_prefix("text", text)
-            push("fulltext_fields", "tika_text")
+            doc.update_plugin('text', text, 'tika')
+            doc.register_searchable_field("text", "tika")
         if description:
-            update_if_not_set("description", description)
-        update_with_prefix("version", 1)
-
-        success = False
-        countdown = itertools.count(-10)
-        accepted_languages = args.accepted_languages.split(",")
-        while not success and countdown.next():
-            fulltext_fields = db.docs.find_one({"_id": id},
-                    {"fulltext_fields": 1})["fulltext_fields"]
-            text_to_index = []
-            for fieldname, value in db.docs.find_one({"_id": id},
-                    dict(zip(fulltext_fields, [1 for x in
-                    fulltext_fields]))).items():
-                if fieldname != "_id":
-                    text_to_index.append(value)
-            indexed_text = list(index(" ".join(text_to_index),
-                                accepted_languages=accepted_languages))
-            update_result = db.docs.update({"_id": id,
-                    "fulltext_fields": fulltext_fields},
-                    {"$set": {"search_terms": indexed_text}}, safe=True)
-            success |= update_result["updatedExisting"]
-    print "Updated", id
+            doc.update_plugin_and_canonical('description', description,
+                    'tika')
+        doc.update_plugin('version', 1, 'tika')
+        doc.reindex()
