@@ -24,14 +24,6 @@
           <input type="file" name="file" id="file" />
         </div>
       </div>
-      <div class="clearfix">
-        <label>
-          Do not force test extraction
-        </label>
-        <div class="input">
-          <input type="checkbox" value="false" name="force_detection" id="force_detection" />
-        </div>
-      </div>
       <div class="actions">
         <input type="submit" value="Add" class="btn primary">&nbsp;<button class="btn" type="reset">Cancel</button>
       </div>

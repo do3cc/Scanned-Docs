@@ -13,9 +13,14 @@ import pymongo
 import requests
 import subprocess
 import zmq
+from celery.task import task
 
 from scanned_docs.index import index
 from scanned_docs.utils import convertStringToDateTime
+
+@task
+def parser_task():
+    return 1
 
 
 def main():
