@@ -1,17 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from mock import Mock
 
 
 def test_docdb_passes_everything():
     from scanned_docs.db import DocDB
 
-    class DB(object):
-
-        def find(self):
-            return [None]
-
-    docdb = DocDB(DB(), [], object())
-    docs = docdb.find()
+    db = Mock()
+    docdb = DocDB(db, None, [], '')
+    docs = list(docdb.find())
     doc = docs[0]
     assert len(docs) == 1
     assert doc.db == docdb.db

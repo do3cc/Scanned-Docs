@@ -3,16 +3,15 @@
 from lxml import etree
 from tempfile import NamedTemporaryFile
 from webhelpers import text as texthelpers
-import pymongo
 import subprocess
 from celery.task import task
 from scanned_docs.utils import convertStringToDateTime
-from scanned_docs.db import DocDB
+from scanned_docs.db import get_doc_db
 import os
 
-@task
-def parser_task():
-    return 1
+
+def parser(docids=[], initial=False):
+    parser_task.delay(docids, initial)
 
 
 @task
@@ -21,43 +20,26 @@ def parser_task(
     initial=False,
     docdb=None,
     tikapath=None,
-    accepted_languages=None,
     ):
-
+    version = '0.1'
     tikapath = tikapath or os.environ.get('tikapath')
-    accepted_languages = accepted_languages \
-        or os.environ.get('accepted_languages')
-    docdb = docdb or DocDB(open_db_connection(), accepted_languages)
+    docdb = get_doc_db(prefix='tika')
     if initial:
-        handle_initial(docdb, tikapath, accepted_languages)
-        return
+        for docid in docdb.find_unparsed(version):
+            handle_update(docid, tikapath, version)
     for docid in docids or []:
-        handle_update(docdb, tikapath, accepted_languages, docid)
+        handle_update(docdb, tikapath, version)
     return
-
-
-def open_db_connection(db_conn=None, db_name=None):
-    db_conn = db_conn or os.environ.get('mongodb_conn')
-    db_name = db_name or os.environ.get('mongodb_db')
-    conn = pymongo.Connection(db_conn)
-    return conn[db_name]
-
-
-def handle_initial(db, tikapath, accepted_languages):
-    for doc in db.find({'tika_version': {'$exists': False}}):
-        handle_update(db, tikapath, accepted_languages, doc=doc)
 
 
 def handle_update(
     db,
+    id,
     tikapath,
-    accepted_languages,
-    id=None,
-    doc=None,
+    version,
     ):
 
-    if not doc:
-        doc = db.find_one(id)
+    doc = db.find_one(id)
     data = doc.raw_data
     with NamedTemporaryFile() as tmpfile:
         tmpfile.write(data)
@@ -82,18 +64,17 @@ def handle_update(
                 whole_word=True)
 
         if content_type:
-            doc.update_plugin_and_canonical('content_type',
-                    content_type[0], 'tika')
+            doc.update_plugin_and_canonical_attr('content_type',
+                    content_type[0])
         if date:
-            doc.update_plugin_and_canonical('created', date, 'tika')
+            doc.update_plugin_and_canonical_attr('created', date)
         if content:
-            doc.update_plugin('full_html', content, 'tika')
-            doc.register_html_representation('full_html', 'tika')
+            doc.update_plugin_attr('full_html', content)
+            doc.register_html_representation('full_html')
         if text:
-            doc.update_plugin('text', text, 'tika')
-            doc.register_searchable_field("text", "tika")
+            doc.update_plugin('text', text)
+            doc.register_searchable_field("text")
         if description:
-            doc.update_plugin_and_canonical('description', description,
-                    'tika')
-        doc.update_plugin('version', 1, 'tika')
+            doc.update_plugin_and_canonical_attr('description', description)
+        doc.finish_parsing(version)
         doc.reindex()
