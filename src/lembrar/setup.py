@@ -32,9 +32,9 @@ requires = [
 test_requires = ["nose", "coverage", "WebTest", "mock"]
 
 setup(
-    name="scanned_docs",
+    name="lembrar",
     version="0.0",
-    description="scanned_docs",
+    description="lembrar",
     long_description=README,
     classifiers=["Programming Language :: Python", "Framework :: Pylons",
                  "Topic :: Internet :: WWW/HTTP",
@@ -49,15 +49,15 @@ setup(
     install_requires=requires,
     tests_require=test_requires,
     extras_require=dict(test=test_requires),
-    test_suite="scanned_docs",
+    test_suite="lembrar",
     entry_points="""\
       [paste.app_factory]
-      main = scanned_docs:main
+      main = lembrar:main
       [console_scripts]
-      tika = scanned_docs.plugins.tika:main
-      broker = scanned_docs.plugins.broker:main
-      [scanned_docs.parsers]
-      tika = scanned_docs.plugins.tika:parser_task
+      tika = lembrar.plugins.tika:main
+      broker = lembrar.plugins.broker:main
+      [lembrar.parsers]
+      tika = lembrar.plugins.tika:parser_task
       """,
     paster_plugins=["pyramid"],
     )

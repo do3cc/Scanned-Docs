@@ -4,7 +4,7 @@ from datetime import datetime
 from pymongo.objectid import ObjectId
 from pyramid.httpexceptions import HTTPFound
 
-from scanned_docs.index import index
+from lembrar.index import index
 
 
 def edit(request):

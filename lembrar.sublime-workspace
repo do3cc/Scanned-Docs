@@ -1,0 +1,374 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"FIE",
+				"FIELDMAKERS_POSITIONS"
+			],
+			[
+				"F",
+				"FIELDMAKERS_POSITIONS"
+			],
+			[
+				"stellvertreter",
+				"stellvertreter"
+			],
+			[
+				"acc",
+				"accepted_languages"
+			],
+			[
+				"se",
+				"searchable_fields"
+			],
+			[
+				"keyboard",
+				"keyboard_settings"
+			],
+			[
+				"tex",
+				"text_ensure_line"
+			],
+			[
+				"ninja_",
+				"ninja_script_contents"
+			],
+			[
+				"i",
+				"interfaces  (module)"
+			],
+			[
+				"CMFC",
+				"CMFCore  (module)"
+			],
+			[
+				"Ir",
+				"IRemoteDisplay"
+			],
+			[
+				"price",
+				"price"
+			],
+			[
+				"special_price",
+				"special_price"
+			],
+			[
+				"spe",
+				"special_price"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"git pull",
+				"Git: Pull"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"Package Control:disc",
+				"Package Control: Discover Packages"
+			],
+			[
+				"Package Control: List",
+				"Package Control: List Packages"
+			],
+			[
+				"lorem",
+				"Snippet: Lorem ipsum"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"",
+				"About"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 252.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/do3cc/dev/projects/recensio.buildout/src/recensio.contenttypes/recensio/contenttypes/content/schemata.py",
+		"/home/do3cc/.config/sublime-text-2/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/do3cc/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap",
+		"/home/do3cc/dev/projects/bgp/src/bgp.servicespecs/bgp/servicespecs/browser/export.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/docs/installation_and_usage.rst",
+		"/home/do3cc/dev/projects/Scanned-Docs/docs/tutorial.rst",
+		"/home/do3cc/dev/projects/Scanned-Docs/docs/rest_api.rst",
+		"/home/do3cc/dev/projects/Scanned-Docs/docs/conf.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/docs/index.rst",
+		"/home/do3cc/p/do3cc_infrastructure/services.py",
+		"/home/do3cc/p/dipf.intranet/src/dipf.staffmember/dipf/staffmember/browser/syncmember.py",
+		"/home/do3cc/p/dipf.intranet/src/dipf.staffmember/dipf/staffmember/browser/__init__.py",
+		"/home/do3cc/p/dipf.intranet/src/dipf.staffmember/dipf/staffmember/staffmember.py",
+		"/home/do3cc/p/dipf.intranet/src/dipf.staffmember/dipf/staffmember/profiles/default/types/Staffmember.xml",
+		"/home/do3cc/Dropbox/Starzel/DIPF/Notizen/ldap_dump_schmitt.txt",
+		"/home/do3cc/p/dipf.intranet/src/dipf.staffmember/dipf/staffmember/templates/staffmemberview.pt",
+		"/home/do3cc/p/dipf.intranet/src/dipf.staffmember/dipf/staffmember/browser/",
+		"/home/do3cc/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
+		"/home/do3cc/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/do3cc/.config/sublime-text-2/Packages/SideBarGit/SideBarGit.sublime-settings",
+		"/home/do3cc/p/dipf.intranet/dipf_intranet.sublime-project",
+		"/home/do3cc/p/dipf.intranet/bo-deploy.cfg",
+		"/home/do3cc/p/dynajet/src-mrd/plone.app.multilingual/src/plone/app/multilingual/browser/setup.py",
+		"/home/do3cc/.config/sublime-text-2/Packages/User/Base File.sublime-settings",
+		"/home/do3cc/.config/sublime-text-2/Packages/User/Global.sublime-settings",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/vocabularies.py",
+		"/home/do3cc/.config/sublime-text-2/Packages/SublimeCodeIntel/Default (Linux).sublime-keymap",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/permissions.zcml",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/browser/product_templates/view.pt",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/browser/accessory_templates/view.pt",
+		"/home/do3cc/.eggs/plone.folder-1.0.1-py2.6.egg/plone/folder/ordered.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/events/buyable.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/behaviors/configure.zcml",
+		"/home/do3cc/p/dynajet/parts/omelette/plone/dexterity/content.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/traverser/traversal.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/behaviors/remotedisplay.py",
+		"/tmp/bla/test.py",
+		"/home/do3cc/.config/sublime-text-2/Packages/User/JSON.sublime-settings",
+		"/home/do3cc/.config/sublime-text-2/Packages/Default/Base File.sublime-settings",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/browser/remote.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/browser/deform.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/behaviors/remotefolder.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/browser/products.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/indexers.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/traverser/configure.zcml",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/configure.zcml",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/indexers.zcml",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/browser/import.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/content/dealer.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/profiles/default/rolemap.xml",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/browser/product.py",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/behaviors/products.py",
+		"/home/do3cc/.config/sublime-text-2/Packages/Default/Global.sublime-settings",
+		"/home/do3cc/p/dynajet/src/dynajet.site/src/dynajet/site/browser/accessory.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"",
+			"/media/truecrypt1/fabric",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"intranet",
+			"tidy",
+			"bgp.servicespecs.usersvocabulary",
+			"todo",
+			"subprocess",
+			"local",
+			"input",
+			">>",
+			"known",
+			"dir_ensure",
+			"restart",
+			"xxx",
+			"could not",
+			"IStaffmember",
+			"STANDORTE",
+			"Schmitt",
+			"deleted_user_ids",
+			"slow",
+			"replacements",
+			"catalog.*path",
+			"path",
+			"snippet",
+			"def",
+			"sources"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"missing_user_ids"
+		],
+		"reverse": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 32.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"actions.py",
+				"src/slc.intranet/src/slc/intranet/browser/actions.py"
+			],
+			[
+				"services",
+				"do3cc_infrastructure/services.py"
+			],
+			[
+				"sync",
+				"src/dipf.staffmember/dipf/staffmember/browser/syncmember.py"
+			],
+			[
+				"bo-deply",
+				"dipf.intranet/bo-deploy.cfg"
+			],
+			[
+				"multilingusetup.py",
+				"dynajet/src-mrd/plone.app.multilingual/src/plone/app/multilingual/browser/setup.py"
+			],
+			[
+				"import.py",
+				"dynajet/src/dynajet.site/src/dynajet/site/browser/import.py"
+			],
+			[
+				"buyabl",
+				"site/events/buyable.py"
+			],
+			[
+				"accessory.py",
+				"dynajet/src/dynajet.site/src/dynajet/site/browser/accessory.py"
+			],
+			[
+				"browserproduct.py",
+				"dynajet/src/dynajet.site/src/dynajet/site/browser/product.py"
+			],
+			[
+				"accessor",
+				"site/browser/accessory.py"
+			],
+			[
+				"product.py",
+				"site/browser/product.py"
+			],
+			[
+				"dealer.py",
+				"dynajet/src/dynajet.site/src/dynajet/site/content/dealer.py"
+			],
+			[
+				"permiss",
+				"site/permissions.zcml"
+			],
+			[
+				"dealer",
+				"site/content/dealer.py"
+			],
+			[
+				"voc",
+				"site/vocabularies.py"
+			],
+			[
+				"remotedi",
+				"dynajet/src/dynajet.site/src/dynajet/site/behaviors/remotedisplay.py"
+			],
+			[
+				"",
+				"/home/do3cc/.config/sublime-text-2/Packages/User/Base File.sublime-settings"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 261.0,
+	"status_bar_visible": true
+}

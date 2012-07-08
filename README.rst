@@ -23,7 +23,7 @@ apt-get build-dep python
 
 The buildout installs the tests too. Please run the tests to see if everything
 worked:
-./bin/nosetests src/scanned_docs
+./bin/nosetests src/lembrar
 
 Usage
 =====

@@ -6,7 +6,7 @@ from pyramid.httpexceptions import HTTPFound
 from webhelpers.paginate import Page, PageURL_WebOb
 from webob import Response
 
-from scanned_docs.index import index
+from lembrar.index import index
 
 
 def list_view(request):

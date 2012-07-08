@@ -4,7 +4,7 @@ from PIL.Image import Image
 
 
 def test_extract_data():
-    from scanned_docs.recognize import recognize
+    from lembrar.recognize import recognize
     filedata = resource_stream(__name__, 'test.jpg')
     lang, img, text = recognize(filedata.read(), ['en'], True)
     assert lang == 'en'
@@ -14,7 +14,7 @@ def test_extract_data():
 
 @raises(TypeError)
 def test_extract_data_failed_ocr():
-    from scanned_docs import recognize
+    from lembrar import recognize
     orig_ocr = recognize.ocr
     recognize.ocr = lambda a, b: 1
     try:
@@ -26,7 +26,7 @@ def test_extract_data_failed_ocr():
 
 @raises(TypeError)
 def test_extract_data_failed_ocr2():
-    from scanned_docs import recognize
+    from lembrar import recognize
     filedata = resource_stream(__name__, 'test.jpg')
 
     def count(a, b):
@@ -43,7 +43,7 @@ def test_extract_data_failed_ocr2():
 
 
 def test_extract_data_ignore_failure():
-    from scanned_docs import recognize
+    from lembrar import recognize
     orig_ocr = recognize.ocr
 
     def count(a, b):

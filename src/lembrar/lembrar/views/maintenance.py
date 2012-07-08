@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from guess_language import guessLanguage
-from scanned_docs.index import index
+from lembrar.index import index
 
 
 def upgrade(request):

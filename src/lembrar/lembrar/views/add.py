@@ -2,9 +2,9 @@ from bson.binary import Binary
 from datetime import datetime
 from pyramid.httpexceptions import HTTPFound, HTTPServerError
 
-from scanned_docs.image import get_images_from_stream, get_thumbnail
-from scanned_docs.index import index
-from scanned_docs.recognize import recognize
+from lembrar.image import get_images_from_stream, get_thumbnail
+from lembrar.index import index
+from lembrar.recognize import recognize
 
 
 def human_add(request):

@@ -6,11 +6,11 @@ from pyramid.renderers import get_renderer
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
 import pymongo
 
-from scanned_docs.resources import Root
+from lembrar.resources import Root
 
 
 def add_base_template(event):
-    base = get_renderer("scanned_docs:templates/base.pt").implementation()
+    base = get_renderer("lembrar:templates/base.pt").implementation()
     event.update({"base": base})
 
 
@@ -21,31 +21,31 @@ def main(global_config, **settings):
     config = Configurator(settings=settings, root_factory=Root,
                           session_factory=my_session_factory)
     config.include("cornice")
-    config.scan("scanned_docs.service")
-    config.add_view("scanned_docs.views.list.list_view",
-                    context="scanned_docs:resources.Root",
-                    renderer="scanned_docs:templates/list.pt")
+    config.scan("lembrar.service")
+    config.add_view("lembrar.views.list.list_view",
+                    context="lembrar:resources.Root",
+                    renderer="lembrar:templates/list.pt")
     config.add_route("thumb", pattern="{id}/thumb")
-    config.add_view("scanned_docs.views.list.thumb", route_name="thumb")
+    config.add_view("lembrar.views.list.thumb", route_name="thumb")
     config.add_route("image", pattern="{id}/image")
-    config.add_view("scanned_docs.views.list.image", route_name="image")
+    config.add_view("lembrar.views.list.image", route_name="image")
     config.add_route("del", pattern="{id}/delete")
-    config.add_view("scanned_docs.views.list.delete", route_name="del",
+    config.add_view("lembrar.views.list.delete", route_name="del",
                     renderer="json")
-    config.add_view("scanned_docs.views.add.add", name="add",
-                    context="scanned_docs:resources.Root", renderer="json")
-    config.add_view("scanned_docs.views.add.human_add", name="human_add",
-                    context="scanned_docs:resources.Root",
-                    renderer="scanned_docs:templates/add.pt")
-    config.add_view("scanned_docs.views.maintenance.upgrade", name="upgrade",
+    config.add_view("lembrar.views.add.add", name="add",
+                    context="lembrar:resources.Root", renderer="json")
+    config.add_view("lembrar.views.add.human_add", name="human_add",
+                    context="lembrar:resources.Root",
+                    renderer="lembrar:templates/add.pt")
+    config.add_view("lembrar.views.maintenance.upgrade", name="upgrade",
                     renderer="json")
     config.add_route("edit", pattern="{id}/edit")
-    config.add_view("scanned_docs.views.edit.edit", route_name="edit",
-                    renderer="scanned_docs:templates/edit.pt",
+    config.add_view("lembrar.views.edit.edit", route_name="edit",
+                    renderer="lembrar:templates/edit.pt",
                     request_method="GET")
-    config.add_view("scanned_docs.views.edit.edit_post", route_name="edit",
+    config.add_view("lembrar.views.edit.edit_post", route_name="edit",
                     request_method="POST")
-    config.add_static_view("static", "scanned_docs:static")
+    config.add_static_view("static", "lembrar:static")
     config.add_subscriber(add_base_template, "pyramid.events.BeforeRender")
 
     # MongoDB

@@ -81,7 +81,7 @@
     </div>
     <script type="text/javascript">
       $(document).ready(function(){
-      scanned_docs.edit_init();
+      lembrar.edit_init();
       });
     </script>
   </div>

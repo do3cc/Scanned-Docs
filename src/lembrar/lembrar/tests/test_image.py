@@ -3,7 +3,7 @@ from pkg_resources import resource_stream, resource_filename
 
 
 def test_get_images_from_image():
-    from scanned_docs import image
+    from lembrar import image
     test_file_stream = resource_stream(__name__, 'test.jpg')
 
     images = image.get_images_from_stream(test_file_stream)
@@ -14,7 +14,7 @@ def test_get_images_from_image():
 
 
 def test_get_images_from_pdf():
-    from scanned_docs import image
+    from lembrar import image
     from StringIO import StringIO
     test_file_stream = resource_stream(__name__, 'test.pdf')
 
@@ -30,7 +30,7 @@ def test_get_images_from_pdf():
 
 @raises(ValueError)
 def test_get_images_from_bad():
-    from scanned_docs import image
+    from lembrar import image
     test_file_stream = resource_stream(__name__, 'test_image.py')
 
     images = image.get_images_from_stream(test_file_stream)

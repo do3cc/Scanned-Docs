@@ -10,8 +10,8 @@ from webob import Response
 import json
 import zmq
 
-from scanned_docs.index import index
-from scanned_docs.utils import convertStringToDateTime
+from lembrar.index import index
+from lembrar.utils import convertStringToDateTime
 
 doc_service = Service(name='doc', path='/doc*docid')
 

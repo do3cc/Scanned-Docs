@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from pymongo.objectid import ObjectId
 import pymongo
-from scanned_docs.index import index
+from lembrar.index import index
 import gridfs
 import os
 
@@ -65,7 +65,7 @@ class Doc(object):
         :type value: string
         '''
 
-        self.update(key, value)
+        self.update_plugin_attr(key, value)
         if key not in self.doc:
             self.doc[key] = value
         self.db.save(self.doc)

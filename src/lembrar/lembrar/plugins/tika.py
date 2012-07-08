@@ -5,8 +5,8 @@ from tempfile import NamedTemporaryFile
 from webhelpers import text as texthelpers
 import subprocess
 from celery.task import task
-from scanned_docs.utils import convertStringToDateTime
-from scanned_docs.db import get_doc_db
+from lembrar.utils import convertStringToDateTime
+from lembrar.db import get_doc_db
 import os
 
 
