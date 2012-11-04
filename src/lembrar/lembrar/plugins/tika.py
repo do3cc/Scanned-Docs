@@ -21,6 +21,7 @@ def parser_task(
     docdb=None,
     tikapath=None,
     ):
+    print "DOOINGit"
     version = '0.1'
     tikapath = tikapath or os.environ.get('tikapath')
     docdb = get_doc_db(prefix='tika')
@@ -28,7 +29,7 @@ def parser_task(
         for docid in docdb.find_unparsed(version):
             handle_update(docid, tikapath, version)
     for docid in docids or []:
-        handle_update(docdb, tikapath, version)
+        handle_update(docdb, docid, tikapath, version)
     return
 
 

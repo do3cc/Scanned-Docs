@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import requests
-for i in range(50000):
-    reply = requests.put("http://localhost:6547/doc", data=dict(title="test"),
+for i in range(5):
+    reply = requests.put("http://localhost:6543/docs", data=dict(title="test"),
                         files={'file': ("file",
-                        open("src/lembrar/lembrar/tests/test.odt"))})
+                        open("/tmp/sentry08.pdf"))})
     print reply.content

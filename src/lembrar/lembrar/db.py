@@ -1,10 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from pymongo.objectid import ObjectId
-import pymongo
-from lembrar.index import index
+from pyramid.threadlocal import get_current_registry
 import gridfs
 import os
+import pymongo
+from lembrar.index import index
+from lembrar.plugins import notify_new_document
 
 
 class Doc(object):
@@ -26,6 +29,30 @@ class Doc(object):
         self.prefix = prefix
         self.raw_data_file = grid.get(doc['raw_data'])
 
+    def to_jsonable_dict(self):
+        '''
+        Return a dict of the document that can be converted to json,
+        without any binary data.
+        '''
+
+        retval = {}
+        for (key, value) in self.doc.items():
+            if key not in ('raw_data', '_id'):
+                if isinstance(value, datetime):
+                    retval[key] = value.isoformat()
+                else:
+                    retval[key] = value
+        retval['id'] = str(self.doc['_id'])
+        return retval
+
+    def update_from_dict(self, dict_):
+        '''
+        Update the data with something received from a dict
+        '''
+        for key, value in dict_.items():
+            self.doc[key] = value
+        self.reindex()
+
     @property
     def raw_data(self):
         '''
@@ -33,6 +60,24 @@ class Doc(object):
         '''
 
         return self.raw_data_file.read()
+
+    def get(self, key):
+        """
+        Return the data of given key
+
+        :param key: The property name
+        :type key: string
+        """
+        return self.doc[key]
+
+    def __contains__(self, key):
+        """
+        Return whether the document has a given key
+
+        :param key: The property name
+        :type key: string
+        """
+        return key in self.doc
 
     def update_plugin_attr(self, key, value):
         '''
@@ -47,7 +92,7 @@ class Doc(object):
         '''
 
         self.doc[self.prefixed_name(key)] = value
-        self.db.save(self.doc)
+        self.db.docs.save(self.doc)
 
     def update_plugin_and_canonical_attr(self, key, value):
         '''
@@ -68,7 +113,7 @@ class Doc(object):
         self.update_plugin_attr(key, value)
         if key not in self.doc:
             self.doc[key] = value
-        self.db.save(self.doc)
+        self.db.docs.save(self.doc)
 
     def register_html_representation(self, field):
         '''
@@ -84,7 +129,13 @@ class Doc(object):
             self.doc['full_htmls'] = []
         if fieldname not in self.doc['full_htmls']:
             self.doc['full_htmls'].append(fieldname)
-        self.db.save(self.doc)
+        self.db.docs.save(self.doc)
+
+    def get_html_representations(self):
+        """
+        Return all registered html representations of the document
+        """
+        return [self.doc[x] for x in self.doc.get('full_htmls', [])]
 
     def register_searchable_field(self, field):
         '''
@@ -99,7 +150,7 @@ class Doc(object):
             self.doc['searchable_fields'] = []
         if fieldname not in self.doc['searchable_fields']:
             self.doc['searchable_fields'].append(fieldname)
-        self.db.save(self.doc)
+        self.db.docs.save(self.doc)
 
     def prefixed_name(self, field):
         return self.prefix + '_' + field
@@ -109,13 +160,13 @@ class Doc(object):
         Reindex the document
         '''
 
-        text_to_index = []
-        for field in self.doc['fulltext_fields']:
+        text_to_index = [self.doc['title']]
+        for field in self.doc.get('fulltext_fields', []):
             text_to_index.append(self.doc[field])
         indexed_text = list(index(' '.join(text_to_index),
                             accepted_languages=self.accepted_languages))
         self.doc['search_terms'] = indexed_text
-        self.db.save(self.doc)
+        self.db.docs.save(self.doc)
 
     def finish_parsing(self, version):
         '''
@@ -159,12 +210,44 @@ class DocDB(object):
             yield Doc(doc, self.db, self.grid, self.accepted_languages,
                       self.prefix)
 
+    def count(self, *args, **kw):
+        return self.db.docs.find(*args, **kw).count()
+
+
     def find_one(self, id):
         '''Find one like in mongodb'''
 
         id = ObjectId(id)
         return Doc(self.db.docs.find_one(dict(_id=id)), self.db,
                    self.grid, self.accepted_languages, self.prefix)
+
+    def remove_one(self, id):
+        """Remove one document with the given id
+        :param id: The document id
+        :type id: string
+        """
+        return self.db.docs.remove(ObjectId(id), safe=True)
+
+    def add_one(
+        self,
+        file_reader,
+        created,
+        **kw
+        ):
+        '''Add one document, store all kwargs on it
+        :param file_reader: The file data
+        :type file_reader: An object that can be read from
+        :param created: The time, the object got created
+        :type created: datetime object without tz info and utc time
+        '''
+
+        params = dict(created=created,
+                      raw_data=self.grid.put(file_reader))
+        for (key, value) in kw.items():
+            params[key] = value
+        docid = self.db.docs.insert(params)
+        notify_new_document(docid)
+        return docid
 
     def find_unparsed(self, version):
         '''
@@ -175,6 +258,14 @@ class DocDB(object):
 
         return self.find(dict(version=version))
 
+    def get_stat(self, statname):
+        '''
+        '''
+        if statname == 'tags':
+            return self.db.docs.distinct('tags')
+        else:
+            return "undefined"
+
 
 def get_doc_db(
     prefix='',
@@ -182,6 +273,8 @@ def get_doc_db(
     db_name=None,
     grid=None,
     accepted_languages=None,
+    user=None,
+    password=None,
     ):
     '''
     Create a :py:class:`lembrar.db.DocDB` instance.
@@ -191,12 +284,39 @@ def get_doc_db(
     :type prefix: string
     '''
 
-    db_dsn = db_dsn or os.environ.get('mongodb_dsn')
-    db_name = db_name or os.environ.get('mongodb_db')
+    settings = get_current_registry().settings
+    db_dsn = db_dsn or os.environ.get('mongodb_dsn') \
+        or settings.get('mongodb_dsn')
+    db_name = db_name or os.environ.get('mongodb_db') \
+        or settings.get('mongodb_db')
     accepted_languages = accepted_languages \
-        or os.environ.get('accepted_languages').split(',')
+        or (os.environ.get('accepted_languages')
+            or settings.get('accepted_languages')).split(',')
+    user = user or os.environ.get("mongodb_user") or settings.get("mongodb_user")
+    password = password or os.environ.get("mongodb_password") or settings.get("mongodb_password")
     conn = pymongo.Connection(db_dsn)
     db = conn[db_name]
+    db.authenticate(user, password)
     grid = grid or gridfs.GridFS(db)
+    docdb = DocDB(db, grid, accepted_languages, prefix)
+    return docdb
+
+
+def get_doc_db_from_request(request):
+    '''
+    Create a :py:class:`lembrar.db.DocDB` instance from information of a
+    request.
+
+    :param request: The request from which we try to extract a DocDB
+    :type request: a webob request object
+    '''
+
+    settings = request.registry.settings
+    db = request.db
+    grid = gridfs.GridFS(db)
+    accepted_languages = (os.environ.get('accepted_languages')
+                          or settings.get('accepted_languages'
+                          )).split(',')
+    prefix = ''
     docdb = DocDB(db, grid, accepted_languages, prefix)
     return docdb

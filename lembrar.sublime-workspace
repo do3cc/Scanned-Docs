@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"acc",
+				"accepted_languages"
+			],
+			[
+				"update_plugin",
+				"update_plugin_and_canonical_attr"
+			],
+			[
+				"not",
+				"notify_new_document"
+			],
+			[
 				"FIE",
 				"FIELDMAKERS_POSITIONS"
 			],
@@ -14,10 +26,6 @@
 			[
 				"stellvertreter",
 				"stellvertreter"
-			],
-			[
-				"acc",
-				"accepted_languages"
 			],
 			[
 				"se",
@@ -63,6 +71,102 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "src/lembrar/lembrar/static/js/app.js",
+			"settings":
+			{
+				"buffer_size": 12046,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "repair.py",
+			"settings":
+			{
+				"buffer_size": 311,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lembrar/lembrar/utils.py",
+			"settings":
+			{
+				"buffer_size": 119,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "development.ini",
+			"settings":
+			{
+				"buffer_size": 900,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lembrar/lembrar/db.py",
+			"settings":
+			{
+				"buffer_size": 9234,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lembrar/lembrar/plugins/ocr.py",
+			"settings":
+			{
+				"buffer_size": 1470,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lembrar/lembrar/index.py",
+			"settings":
+			{
+				"buffer_size": 990,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lembrar/lembrar/recognize.py",
+			"settings":
+			{
+				"buffer_size": 1936,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lembrar/lembrar/service.py",
+			"settings":
+			{
+				"buffer_size": 7439,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lembrar/lembrar/__init__.py",
+			"settings":
+			{
+				"buffer_size": 2936,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lembrar/lembrar/static/index.html",
+			"settings":
+			{
+				"buffer_size": 5456,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lembrar/setup.py",
+			"settings":
+			{
+				"buffer_size": 1567,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -124,13 +228,43 @@
 	},
 	"file_history":
 	[
+		"/home/do3cc/Downloads/lala.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/resources.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_lembrar.js",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/plugins/tika.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/plugins/mimetype.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_db.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/docs/rest_api.rst",
+		"/home/do3cc/dev/projects/Scanned-Docs/development.ini",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/service.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/__init__.py",
+		"/tmp/test/zestreleaser_checkoutafteraction/bgp/zestreleaser/aftercheckoutaction/__init__.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/static/js/lembrar.js",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_lembrar.html",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/db.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/setup.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/image.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/celery.sh",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/celeryconfig.py",
+		"/tmp/test/zestreleaser_checkoutafteraction/README.txt",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/plugins/__init__.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/docs/_build/html/index.html",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/static/bootstrap.css",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_service.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_plugins.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/docs/writing_extensions.rst",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/static/index.html",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_recognize.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_service.p",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_tika.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_main.py",
+		"/home/do3cc/dev/projects/Scanned-Docs/src/lembrar/lembrar/tests/test_doc_service.py",
 		"/home/do3cc/dev/projects/recensio.buildout/src/recensio.contenttypes/recensio/contenttypes/content/schemata.py",
 		"/home/do3cc/.config/sublime-text-2/Packages/Default/Default (Linux).sublime-keymap",
 		"/home/do3cc/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap",
 		"/home/do3cc/dev/projects/bgp/src/bgp.servicespecs/bgp/servicespecs/browser/export.py",
 		"/home/do3cc/dev/projects/Scanned-Docs/docs/installation_and_usage.rst",
 		"/home/do3cc/dev/projects/Scanned-Docs/docs/tutorial.rst",
-		"/home/do3cc/dev/projects/Scanned-Docs/docs/rest_api.rst",
 		"/home/do3cc/dev/projects/Scanned-Docs/docs/conf.py",
 		"/home/do3cc/dev/projects/Scanned-Docs/docs/index.rst",
 		"/home/do3cc/p/do3cc_infrastructure/services.py",
@@ -198,6 +332,30 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"nav-edit",
+			"index",
+			"setFilter",
+			"docs_view",
+			"doc_te",
+			"reset",
+			"bindall",
+			"debugger",
+			"save: ",
+			"json",
+			"debugg",
+			"doceditview",
+			"edit",
+			"bindall",
+			"searchform",
+			"search",
+			"find",
+			"self",
+			"search",
+			"css",
+			"static/",
+			"parsers",
+			"pdb",
+			"new_doc",
 			"intranet",
 			"tidy",
 			"bgp.servicespecs.usersvocabulary",
@@ -229,6 +387,9 @@
 		"regex": true,
 		"replace_history":
 		[
+			"this",
+			"",
+			"plugins",
 			"missing_user_ids"
 		],
 		"reverse": true,
@@ -240,8 +401,345 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/lembrar/lembrar/static/js/app.js",
+					"settings":
+					{
+						"buffer_size": 12046,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5847,
+								5847
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2168.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "repair.py",
+					"settings":
+					{
+						"buffer_size": 311,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								311,
+								311
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/lembrar/lembrar/utils.py",
+					"settings":
+					{
+						"buffer_size": 119,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "development.ini",
+					"settings":
+					{
+						"buffer_size": 900,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								218,
+								218
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/lembrar/lembrar/db.py",
+					"settings":
+					{
+						"buffer_size": 9234,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7408,
+								7408
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3408.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/lembrar/lembrar/plugins/ocr.py",
+					"settings":
+					{
+						"buffer_size": 1470,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1071,
+								1071
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 40.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 6,
+					"file": "src/lembrar/lembrar/index.py",
+					"settings":
+					{
+						"buffer_size": 990,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								990,
+								990
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/lembrar/lembrar/recognize.py",
+					"settings":
+					{
+						"buffer_size": 1936,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								282,
+								282
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/lembrar/lembrar/service.py",
+					"settings":
+					{
+						"buffer_size": 7439,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1378,
+								1378
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 510.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/lembrar/lembrar/__init__.py",
+					"settings":
+					{
+						"buffer_size": 2936,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2936,
+								2936
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 248.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/lembrar/lembrar/static/index.html",
+					"settings":
+					{
+						"buffer_size": 5456,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3766,
+								3766
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 32.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "src/lembrar/setup.py",
+					"settings":
+					{
+						"buffer_size": 1567,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1510,
+								1510
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 153.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -262,11 +760,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.610412926392,
 			1.0
 		],
 		"rows":
@@ -276,6 +781,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.jslint_result_view":
+	{
+		"height": 88.0
+	},
 	"replace":
 	{
 		"height": 64.0
@@ -286,6 +795,70 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"setup.py",
+				"Scanned-Docs/src/lembrar/setup.py"
+			],
+			[
+				"utils.py",
+				"src/lembrar/lembrar/utils.py"
+			],
+			[
+				"servi",
+				"Scanned-Docs/src/lembrar/lembrar/service.py"
+			],
+			[
+				"image.py",
+				"Scanned-Docs/src/lembrar/lembrar/image.py"
+			],
+			[
+				"celeryco",
+				"Scanned-Docs/src/lembrar/celeryconfig.py"
+			],
+			[
+				"deve",
+				"Scanned-Docs/development.ini"
+			],
+			[
+				"",
+				"Scanned-Docs/src/lembrar/lembrar/__init__.py"
+			],
+			[
+				"develo",
+				"Scanned-Docs/development.ini"
+			],
+			[
+				"__init",
+				"src/lembrar/lembrar/__init__.py"
+			],
+			[
+				"development.ini",
+				"Scanned-Docs/development.ini"
+			],
+			[
+				"celery.sh",
+				"Scanned-Docs/celery.sh"
+			],
+			[
+				"db.py",
+				"src/lembrar/lembrar/db.py"
+			],
+			[
+				"service.py",
+				"src/lembrar/lembrar/service.py"
+			],
+			[
+				"index.html",
+				"docs/_build/html/index.html"
+			],
+			[
+				"srcindex.html",
+				"src/lembrar/lembrar/static/index.html"
+			],
+			[
+				"lembrar.html",
+				"src/lembrar/lembrar/tests/test_lembrar.html"
+			],
 			[
 				"actions.py",
 				"src/slc.intranet/src/slc/intranet/browser/actions.py"
@@ -349,10 +922,6 @@
 			[
 				"remotedi",
 				"dynajet/src/dynajet.site/src/dynajet/site/behaviors/remotedisplay.py"
-			],
-			[
-				"",
-				"/home/do3cc/.config/sublime-text-2/Packages/User/Base File.sublime-settings"
 			]
 		],
 		"width": 0.0
@@ -369,6 +938,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 261.0,
+	"side_bar_width": 187.0,
 	"status_bar_visible": true
 }

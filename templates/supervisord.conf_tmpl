@@ -30,14 +30,14 @@ autostart = False
 directory= ${buildout:directory}
 command= ${buildout:directory}/bin/paster serve ${buildout:parts-directory}/pastecfg/${scanner_config:environment}
 
-[program:tika]
-directory= ${buildout:directory}
-command= java -jar ${buildout:directory}/tika-app.jar --server ${tika:port}
+#[program:tika]
+#directory= ${buildout:directory}
+#command= java -jar ${buildout:directory}/tika-app.jar --server ${tika:port}
 
-[program:broker]
-directory= ${buildout:directory}
-command= ${buildout:directory}/bin/broker.sh
+#[program:broker]
+#directory= ${buildout:directory}
+#command= ${buildout:directory}/bin/broker.sh
 
-[program:tika_worker]
-directory= ${buildout:directory}
-command= ${buildout:directory}/bin/tika.sh
+#[program:tika_worker]
+#directory= ${buildout:directory}
+#command= ${buildout:directory}/bin/tika.sh

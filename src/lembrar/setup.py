@@ -10,19 +10,16 @@ README = open(os.path.join(here, "README.txt")).read()
 requires = [
     "argparse",
     "cornice",
-    "gevent",
     "guess_language",
-    "gunicorn",
     "iso8601",
     "lxml",
     "PasteScript",
     "Pillow",
     "pymongo==2.0.1",
     "celery",
-    "pyramid<1.3a0",
+    "pyramid",
     "PyStemmer",
     "python-magic",
-    "pyzmq",
     "requests",
     "text_sentence",
     "WebError",
@@ -57,7 +54,9 @@ setup(
       tika = lembrar.plugins.tika:main
       broker = lembrar.plugins.broker:main
       [lembrar.parsers]
-      tika = lembrar.plugins.tika:parser_task
+      tika = lembrar.plugins.tika:parser
+      mimetype = lembrar.plugins.mimetype:parser
+      ocr = lembrar.plugins.ocr:parser
       """,
     paster_plugins=["pyramid"],
     )

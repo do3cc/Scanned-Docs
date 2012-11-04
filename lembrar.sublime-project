@@ -3,6 +3,12 @@
 	[
 		{
 			"path": "src"
+		},
+		{
+			"path": "docs"
+		},
+		{
+			"path": "/home/do3cc/dev/projects/Scanned-Docs"
 		}
 	]
 }
